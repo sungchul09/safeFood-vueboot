@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ssafy.edu.vue.dao.HrmMapper">
+
+ 
+  <select id="getQnATotal" resultType="com.ssafy.edu.vue.dto.QnADto">
+    	SELECT ISBN, TITLE, CONTENT, WRITER, VIEWS, WRITE_DATE FROM QNA ORDER BY ISBN DESC;
+    </select>
+    <select id="getQnADetail" resultType="com.ssafy.edu.vue.dto.QnADto">
+    	SELECT ISBN, TITLE, CONTENT, WRITER, VIEWS, WRITE_DATE FROM QNA WHERE ISBN =#{isbn}
+    </select>
+     <insert id="addQnA" parameterType="com.ssafy.edu.vue.dto.QnADto" >
+    		
+    		INSERT INTO QNA(title,content,writer,views,write_date) VALUES(#{title},#{content},#{writer},#{views},#{write_date})
+    	
+    </insert>
+    <update id="updateQnA" parameterType="com.ssafy.edu.vue.dto.QnADto">
+    	    UPDATE QNA SET title=#{title}, content=#{content}, write_date=#{write_date} WHERE ISBN LIKE #{isbn}          
+    </update>
+     <delete id="deleteQnA" parameterType="java.lang.Integer">
+        DELETE FROM QNA WHERE ISBN =#{isbn}   
+    </delete>
+    <select id="getQnAByWriter" resultType="com.ssafy.edu.vue.dto.QnADto">
+    	SELECT ISBN, TITLE, CONTENT, WRITER, VIEWS, WRITE_DATE FROM QNA WHERE writer like #{writer} ORDER BY ISBN DESC;
+    </select>
+        <update id="updateQnAViews" parameterType="java.lang.Integer">
+    	   update QNA set views=(views+1) where isbn=#{isbn}   
+    </update>
+    
+    
+    <select id="getNoticeTotal" resultType="com.ssafy.edu.vue.dto.NoticeDto">
+    	SELECT ISBN, TITLE, CONTENT, VIEWS, WRITE_DATE FROM NOTICE ORDER BY ISBN DESC;
+    </select>
+    <select id="getNoticeDetail" resultType="com.ssafy.edu.vue.dto.NoticeDto">
+    	SELECT ISBN, TITLE, CONTENT, VIEWS, WRITE_DATE FROM NOTICE WHERE ISBN =#{isbn}
+    </select>
+     <insert id="addNotice" parameterType="com.ssafy.edu.vue.dto.NoticeDto" >
+    		
+    		INSERT INTO NOTICE(title,content,views,write_date) VALUES(#{title},#{content},#{views},#{write_date})
+    	
+    </insert>
+    <update id="updateNotice" parameterType="com.ssafy.edu.vue.dto.NoticeDto">
+    	    UPDATE NOTICE SET title=#{title}, content=#{content}, write_date=#{write_date}, views=#{views} WHERE ISBN LIKE #{isbn}          
+    </update>
+     <update id="updateViews" parameterType="java.lang.Integer">
+    	   update notice set views=(views+1) where isbn=#{isbn}   
+    </update>
+    
+     <delete id="deleteNotice" parameterType="java.lang.Integer">
+        DELETE FROM NOTICE WHERE ISBN =#{isbn}   
+    </delete>
+    
+        <select id="getCommentDetail" resultType="com.ssafy.edu.vue.dto.CommentDto">
+    	SELECT ISBN,QNAISBN, CONTENT, WRITE_DATE FROM COMMENT WHERE QNAISBN =#{qnaisbn}
+    </select>
+     <insert id="addComment" parameterType="com.ssafy.edu.vue.dto.CommentDto" >
+    		
+    		INSERT INTO Comment(qnaisbn,content,write_date) VALUES(#{qnaisbn},#{content},#{write_date})
+    	
+    </insert>
+    
+     <delete id="deleteComment" parameterType="java.lang.Integer">
+        DELETE FROM Comment WHERE ISBN =#{isbn}   
+    </delete>
+    
+    <select id="getFoodDetail" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.FoodDto">
+    	SELECT NAME FROM FOOD_TB WHERE NAME LIKE concat(#{name} ,'%')
+    </select>
+    
+    
+    
+    
+    
+   
+</mapper>
+<!-- private int id;
+	private String name;
+	private String mailid;
+	private String start_date;
+	private int manager_id;
+	private String title;
+	private int dept_id;
+	private double salary;
+	private double commission_pct=0.0; -->
